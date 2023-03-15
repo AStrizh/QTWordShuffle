@@ -6,6 +6,8 @@
 #include <QLabel>
 #include <QHBoxLayout>
 
+#include "wordchallenge.h"
+#include "challengegenerator.h"
 
 
 int main(int argc, char *argv[])
@@ -13,8 +15,12 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     MainWindow w;
 
+    ChallengeGenerator gen;
+    WordChallenge challenge = gen.getChallenge();
 
-    QLabel *label = new QLabel("Hello World!");
+
+
+    QLabel *label = new QLabel(challenge.getWord() + "\n" + challenge.getDefinition());
     QFont font;
     font.setWeight(QFont::Bold);
     font.setPixelSize(12);
@@ -30,6 +36,8 @@ int main(int argc, char *argv[])
     w.centralWidget()->setLayout(layout);
 
     w.show();
+
+    gen.closedb();
     return a.exec();
 }
 
