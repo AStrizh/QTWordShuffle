@@ -19,6 +19,9 @@ set(PROJECT_SOURCES
         challengegenerator.h
         wordchallenge.cpp
         wordchallenge.h
+        draggablelabel.cpp
+        draggablelabel.h
+        resource.qrc
         mainwindow.h
         mainwindow.ui
 )

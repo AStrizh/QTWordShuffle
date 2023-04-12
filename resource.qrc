@@ -1,0 +1,30 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Letters/A.png</file>
+        <file>Letters/B.png</file>
+        <file>Letters/C.png</file>
+        <file>Letters/D.png</file>
+        <file>Letters/E.png</file>
+        <file>Letters/F.png</file>
+        <file>Letters/G.png</file>
+        <file>Letters/H.png</file>
+        <file>Letters/I.png</file>
+        <file>Letters/J.png</file>
+        <file>Letters/K.png</file>
+        <file>Letters/L.png</file>
+        <file>Letters/M.png</file>
+        <file>Letters/N.png</file>
+        <file>Letters/O.png</file>
+        <file>Letters/P.png</file>
+        <file>Letters/Q.png</file>
+        <file>Letters/R.png</file>
+        <file>Letters/S.png</file>
+        <file>Letters/target.png</file>
+        <file>Letters/U.png</file>
+        <file>Letters/V.png</file>
+        <file>Letters/X.png</file>
+        <file>Letters/Y.png</file>
+        <file>Letters/Z.png</file>
+        <file>Letters/T.png</file>
+    </qresource>
+</RCC>
