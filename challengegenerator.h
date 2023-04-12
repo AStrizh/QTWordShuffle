@@ -12,7 +12,7 @@ class ChallengeGenerator
 {
 private:
     QSqlDatabase db;
-
+    QString shuffle(QString);
 
 public:
     ChallengeGenerator();

@@ -12,7 +12,7 @@
 #include "DraggableLabel.h"
 
 
-QString shuffle(QString word);
+//QString shuffle(QString word);
 QList<DraggableLabel *> createImageLabels(const QString &word, QWidget *parent);
 QList<QLabel *> createImageTargets(const int, QWidget *parent);
 
@@ -28,11 +28,11 @@ int main(int argc, char *argv[])
 
 
     //Creates the label, button, alignment info, and attaches it to the window
-    QLabel *label = new QLabel("Push button to get the challenge!");
+    QLabel *label = new QLabel(challenge.getShuffled() + "\n" + challenge.getWord() + "\n" + challenge.getDefinition());
     QFont font;
     font.setWeight(QFont::Bold);
-    font.setPixelSize(12);
-    label->setAlignment(Qt::AlignCenter);
+    font.setPixelSize(14);
+    label->setAlignment(Qt::AlignJustify);
     label->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     label->setFont(font);
     label->setWordWrap(true);
@@ -52,6 +52,10 @@ int main(int argc, char *argv[])
     w.setCentralWidget(new QWidget(&w));
     w.centralWidget()->setLayout(layout);
 
+
+
+
+
     w.setFixedSize(QSize(800, 600));
 
     QWidget *dragLabelParent = new QWidget(&w);
@@ -65,7 +69,7 @@ int main(int argc, char *argv[])
     button->setParent(dragLabelParent);
     QObject::connect(button, &QPushButton::clicked, [&]() {
         challenge = gen.getChallenge();
-        label->setText(shuffle(challenge.getWord()) + "\n" + challenge.getWord() + "\n" + challenge.getDefinition());
+        label->setText(challenge.getShuffled() + "\n" + challenge.getWord() + "\n" + challenge.getDefinition());
     });
 
 
@@ -106,17 +110,7 @@ int main(int argc, char *argv[])
     return a.exec();
 }
 
-//Shuffles the string. Will likely put this in a utilities class once I have more of the project done.
-QString shuffle(QString word){
-    QString shuffled = "";
-    QList<QString> letters = word.split("");
 
-    std::shuffle(letters.begin(), letters.end(), std::mt19937(std::random_device()()));
-        for (auto & letter : letters)
-            shuffled.append(letter);
-
-    return shuffled;
-}
 
 QList<DraggableLabel *> createImageLabels(const QString &word, QWidget *parent)
 {

@@ -19,6 +19,7 @@ WordChallenge ChallengeGenerator::getChallenge(){
         //sets some generic string values to return incase there is no connection to the database
         //idValue was used for debugging and will likely be removed
         QString wordResult="hello";
+        QString shuffled="hello";
         QString definitionResult = "goodbye";
         QString definitionProcessed = "";
         QString idValue = "-57";
@@ -33,6 +34,7 @@ WordChallenge ChallengeGenerator::getChallenge(){
         if(query.next()){
             idValue = query.value(0).toString();
             wordResult = query.value(1).toString();
+            shuffled = shuffle(wordResult);
             definitionResult = query.value(3).toString();
         }
 
@@ -42,12 +44,24 @@ WordChallenge ChallengeGenerator::getChallenge(){
         for(const auto &def : defSplit)
             definitionProcessed.append(def.trimmed() + "\n");
 
-        return WordChallenge(wordResult,definitionProcessed.trimmed());
+        return WordChallenge(wordResult, shuffled, definitionProcessed.trimmed());
 
 
     } else {
         qDebug() << "Failed to open the database";
-        return WordChallenge("Database","Failure");
+        return WordChallenge("Database", "oopsie", "Failure");
     }
 
+}
+
+//Shuffles the string
+QString ChallengeGenerator::shuffle(QString word){
+    QString shuffled = "";
+    QList<QString> letters = word.split("");
+
+    std::shuffle(letters.begin(), letters.end(), std::mt19937(std::random_device()()));
+    for (auto & letter : letters)
+        shuffled.append(letter);
+
+    return shuffled;
 }
