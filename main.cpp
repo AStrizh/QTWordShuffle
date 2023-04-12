@@ -16,11 +16,18 @@
 QList<DraggableLabel *> createImageLabels(const QString &word, QWidget *parent);
 QList<QLabel *> createImageTargets(const int, QWidget *parent);
 
+void updateLabelPositions(QList<DraggableLabel *> &imageLabels,
+                         QList<QLabel *> &imageTargets,
+                         QWidget *dragLabelParent);
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
+    MainWindow window;
+
+
+    window.setFixedSize(QSize(800, 600));
+
 
     //Initializes the database and the WordChallenge object
     ChallengeGenerator gen;
@@ -49,62 +56,47 @@ int main(int argc, char *argv[])
 //    layout->addWidget(button, 0, Qt::AlignCenter);
     layout->setAlignment(Qt::AlignCenter);
 
-    w.setCentralWidget(new QWidget(&w));
-    w.centralWidget()->setLayout(layout);
+    window.setCentralWidget(new QWidget(&window));
+    window.centralWidget()->setLayout(layout);
 
 
 
-
-
-    w.setFixedSize(QSize(800, 600));
-
-    QWidget *dragLabelParent = new QWidget(&w);
-    dragLabelParent->setGeometry(0, 0, w.width(), w.height());
-
+    QWidget *dragLabelParent = new QWidget(&window);
+    dragLabelParent->setGeometry(0, 0, window.width(), window.height());
     QList<DraggableLabel *> imageLabels = createImageLabels(challenge.getWord(), dragLabelParent);
     QList<QLabel *> imageTargets = createImageTargets(challenge.getWord().size(), dragLabelParent);
 
+
+
+
     //Gets the button object defined in the ui class and attches "clicked" functionality to it (calls getChallenge())
-    QPushButton *button = w.findChild<QPushButton*>("pushButton");
+    QPushButton *button = window.findChild<QPushButton*>("pushButton");
     button->setParent(dragLabelParent);
     QObject::connect(button, &QPushButton::clicked, [&]() {
         challenge = gen.getChallenge();
         label->setText(challenge.getShuffled() + "\n" + challenge.getWord() + "\n" + challenge.getDefinition());
+
+        qDeleteAll(imageLabels);
+        qDeleteAll(imageTargets);
+        imageLabels.clear();
+        imageTargets.clear();
+
+        imageLabels = createImageLabels(challenge.getShuffled(), dragLabelParent);
+        imageTargets = createImageTargets(challenge.getWord().size(), dragLabelParent);
+        updateLabelPositions(imageLabels,imageTargets, dragLabelParent);
+
+        window.repaint();
+
     });
 
 
-    w.show();
+    window.show();
 
-    int buttonPosition = (w.width() - button->size().width())/2;
-    button->move(buttonPosition, w.height() - 100);
+    int buttonPosition = (window.width() - button->size().width())/2;
+    button->move(buttonPosition, window.height() - 100);
 
-    //Size of the space the letters will occupy
-    int letterWidths = imageLabels[0]->size().width();
-    int windowSize = w.size().width();
 
-    int letterChunkSize = letterWidths * imageLabels.size();
-    int offseLettertStart = (windowSize - letterChunkSize)/2;
-    for (int i = 0; i < imageLabels.size(); ++i)
-    {
-        int x = offseLettertStart + i * (letterWidths);
-        int y = 50;
-        imageLabels[i]->move(x, y);
-    }
-
-    //Size of the space the targets will occupy
-    int targetWidths = imageTargets[0]->size().width();
-    int targetOffset = 25;
-    int targetSpace = targetWidths + targetOffset;
-
-    int targetChunkSize = targetSpace * imageTargets.size();
-    int offseTargetStart = (windowSize - targetChunkSize)/2;
-    for (int i = 0; i < imageTargets.size(); ++i)
-    {
-        int x = offseTargetStart + i * (targetSpace);
-        int y = 150;
-        imageTargets[i]->move(x, y);
-    }
-
+    updateLabelPositions(imageLabels,imageTargets, dragLabelParent);
 
     gen.closedb();
     return a.exec();
@@ -117,6 +109,7 @@ QList<DraggableLabel *> createImageLabels(const QString &word, QWidget *parent)
     QList<DraggableLabel *> imageLabels;
     for (int i = 0; i < word.length(); ++i)
     {
+
             DraggableLabel *label = new DraggableLabel(parent);
             // Load the image for the current letter and set it as a pixmap for the label
             QPixmap pixmap(QString(":/Letters/%1.png").arg(word.at(i)));
@@ -132,10 +125,46 @@ QList<QLabel *> createImageTargets(const int size, QWidget *parent)
     for (int i = 0; i < size; ++i)
     {
             QLabel *label = new QLabel(parent);
-            // Load the image for the current letter and set it as a pixmap for the label
             QPixmap pixmap(":/Letters/target.png");
             label->setPixmap(pixmap.scaled(60,60,Qt::KeepAspectRatio,Qt::SmoothTransformation));
             imageTargets.append(label);
     }
     return imageTargets;
+}
+
+void updateLabelPositions(QList<DraggableLabel *> &imageLabels,
+                         QList<QLabel *> &imageTargets,
+                         QWidget *dragLabelParent){
+
+    imageLabels[0]->show();
+    //Size of the space the letters will occupy
+    int letterWidths = imageLabels[0]->size().width();
+    int windowSize = dragLabelParent->width();
+
+    int letterChunkSize = letterWidths * imageLabels.size();
+    int offseLettertStart = (windowSize - letterChunkSize)/2;
+
+    for (int i = 0; i < imageLabels.size(); ++i)
+    {
+            int x = offseLettertStart + i * (letterWidths);
+            int y = 50;
+            imageLabels[i]->move(x, y);
+            imageLabels[i]->show();
+    }
+
+    imageTargets[0]->show();
+    //Size of the space the targets will occupy
+    int targetWidths = imageTargets[0]->size().width();
+    int targetOffset = 25;
+    int targetSpace = targetWidths + targetOffset;
+
+    int targetChunkSize = targetSpace * imageTargets.size();
+    int offseTargetStart = (windowSize - targetChunkSize)/2;
+    for (int i = 0; i < imageTargets.size(); ++i)
+    {
+            int x = offseTargetStart + i * (targetSpace);
+            int y = 150;
+            imageTargets[i]->move(x, y);
+            imageTargets[i]->show();
+    }
 }
