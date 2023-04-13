@@ -26,5 +26,6 @@
         <file>Letters/Y.png</file>
         <file>Letters/Z.png</file>
         <file>Letters/T.png</file>
+        <file>Letters/W.png</file>
     </qresource>
 </RCC>
