@@ -17,6 +17,8 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         challengegenerator.cpp
         challengegenerator.h
+        gamestate.h
+        gamestate.cpp
         wordchallenge.cpp
         wordchallenge.h
         draggablelabel.cpp

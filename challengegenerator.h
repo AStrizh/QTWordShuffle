@@ -7,6 +7,8 @@
 #include <QDebug>
 
 #include "wordchallenge.h"
+#include "DraggableLabel.h"
+#include "targetlabel.h"
 
 class ChallengeGenerator
 {

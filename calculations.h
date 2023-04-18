@@ -20,6 +20,10 @@ public:
     static void updateLabelPositions(QList<DraggableLabel *> &imageLabels,
                               QList<TargetLabel *> &imageTargets,
                               QWidget *dragLabelParent);
+
+
+private:
+    //QList<TargetLabel *> &imageTargets;
 };
 
 #endif // CALCULATIONS_H

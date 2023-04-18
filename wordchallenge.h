@@ -2,7 +2,6 @@
 #define WORDCHALLENGE_H
 #include <QString>
 
-
 class WordChallenge
 {
 private:
@@ -17,6 +16,7 @@ public:
     QString getWord(){ return word; }
     QString getShuffled(){ return shuffled; }
     QString getDefinition(){ return definition; }
+
 };
 
 #endif // WORDCHALLENGE_H

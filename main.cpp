@@ -10,19 +10,15 @@
 #include "wordchallenge.h"
 #include "challengegenerator.h"
 #include "DraggableLabel.h"
-#include "calculations.h"
 #include "targetlabel.h"
 
+#include "calculations.h"
+#include "gamestate.h"
 
 
 
-//QString shuffle(QString word);
 QList<DraggableLabel *> createImageLabels(const QString &word, QWidget *parent);
 QList<TargetLabel *> createImageTargets(const int, QWidget *parent);
-
-void updateLabelPositions(QList<DraggableLabel *> &imageLabels,
-                         QList<QLabel *> &imageTargets,
-                         QWidget *dragLabelParent);
 
 int main(int argc, char *argv[])
 {
@@ -36,6 +32,7 @@ int main(int argc, char *argv[])
     //Initializes the database and the WordChallenge object
     ChallengeGenerator gen;
     WordChallenge challenge = gen.getChallenge();
+    GameState &gameState = GameState::getInstance();
 
 
     //Creates the label, button, alignment info, and attaches it to the window
@@ -48,12 +45,6 @@ int main(int argc, char *argv[])
     label->setFont(font);
     label->setWordWrap(true);
 
-    //Gets the button object defined in the ui class and attches "clicked" functionality to it (calls getChallenge())
-//    QPushButton *button = w.findChild<QPushButton*>("pushButton");
-//    QObject::connect(button, &QPushButton::clicked, [&]() {
-//        challenge = gen.getChallenge();
-//        label->setText(shuffle(challenge.getWord()) + "\n" + challenge.getWord() + "\n" + challenge.getDefinition());
-//    });
 
     QVBoxLayout  *layout = new QVBoxLayout ();
     layout->addWidget(label, 0, Qt::AlignCenter);
@@ -67,10 +58,9 @@ int main(int argc, char *argv[])
 
     QWidget *dragLabelParent = new QWidget(&window);
     dragLabelParent->setGeometry(0, 0, window.width(), window.height());
-    QList<DraggableLabel *> imageLabels = createImageLabels(challenge.getShuffled(), dragLabelParent);
-    QList<TargetLabel *> imageTargets = createImageTargets(challenge.getWord().size(), dragLabelParent);
 
-
+    gameState.setImageLabels(createImageLabels(challenge.getShuffled(), dragLabelParent));
+    gameState.setImageTargets(createImageTargets(challenge.getWord().size(), dragLabelParent));
 
 
     //Gets the button object defined in the ui class and attches "clicked" functionality to it (calls getChallenge())
@@ -80,16 +70,11 @@ int main(int argc, char *argv[])
         challenge = gen.getChallenge();
         label->setText(challenge.getShuffled() + "\n" + challenge.getWord() + "\n" + challenge.getDefinition());
 
-        qDeleteAll(imageLabels);
-        qDeleteAll(imageTargets);
-        imageLabels.clear();
-        imageTargets.clear();
+        gameState.clearLists();
 
-        imageLabels = createImageLabels(challenge.getShuffled(), dragLabelParent);
-        imageTargets = createImageTargets(challenge.getWord().size(), dragLabelParent);
-        Calculations::updateLabelPositions(imageLabels,imageTargets, dragLabelParent);
-
-        window.repaint();
+        gameState.setImageLabels(createImageLabels(challenge.getShuffled(), dragLabelParent));
+        gameState.setImageTargets(createImageTargets(challenge.getWord().size(), dragLabelParent));
+        Calculations::updateLabelPositions(gameState.getImageLabels(),gameState.getImageTargets(), dragLabelParent);
 
     });
 
@@ -100,7 +85,7 @@ int main(int argc, char *argv[])
     button->move(buttonPosition, window.height() - 100);
 
 
-    Calculations::updateLabelPositions(imageLabels,imageTargets, dragLabelParent);
+    Calculations::updateLabelPositions(gameState.getImageLabels(), gameState.getImageTargets(), dragLabelParent);
 
     gen.closedb();
     return a.exec();

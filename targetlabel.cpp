@@ -7,8 +7,7 @@ TargetLabel::TargetLabel(QWidget *parent) : QLabel(parent)
 
 void TargetLabel::generateCenter()
 {
-
-    //center = this ->pos().x();
-    qDebug() << this ->pos().x();
-
+    int centerX = pos().x() + size().width()/2;
+    int centerY = pos().y() + size().height()/2;
+    center = QPoint(centerX, centerY);
 }
