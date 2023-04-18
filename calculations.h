@@ -26,6 +26,7 @@ public:
     static bool distanceClose(QPoint letterPos, QPoint targetPos);
 
     static void checkPositions(DraggableLabel* letter);
+    static bool challengeSolved();
 
 
 private:

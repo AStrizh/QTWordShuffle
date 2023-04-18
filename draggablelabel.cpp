@@ -34,6 +34,5 @@ void DraggableLabel::mouseReleaseEvent(QMouseEvent *event)
     }
 
     Calculations::checkPositions(this);
-
 }
 

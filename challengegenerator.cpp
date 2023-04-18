@@ -26,7 +26,8 @@ WordChallenge ChallengeGenerator::getChallenge(){
 
 
         //Found this method for selecting a random DB entry on stack oververflow
-        //Would have prefered to generate a random ID Value and select it but for some reason some entries were not entered into DB
+        //Would have prefered to generate a random ID Value and select it but...
+        //for some reason some entries were not entered into DB during DB generator process
         //Instead of debugging I decided not to worry about a couple of lost words and do this instead.
 
         query.exec("SELECT * FROM words WHERE id IN (SELECT id FROM words ORDER BY RANDOM() LIMIT 1)");

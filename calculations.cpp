@@ -52,6 +52,7 @@ bool Calculations::distanceClose(QPoint letterPos, QPoint targetPos){
     return (distance <= MIN_DISTANCE);
 }
 
+//TODO: Perhaps give Draggeble label a refrence to the target. It would know when it gets moved
 void Calculations::checkPositions(DraggableLabel* letter){
 
     for(TargetLabel* target : GameState::getInstance().getImageTargets()){
@@ -60,9 +61,24 @@ void Calculations::checkPositions(DraggableLabel* letter){
             int newX =  target->getCenter().x() - letter->size().width()/2;
             int newY =  target->getCenter().y() - letter->size().height()/2;
 
+
             letter->move(newX,newY);
+            target->attachLetter(letter);
+
+            //TODO:Returns null instead of Letter for draggable label
+            //qDebug() << "Attached Letter: " << letter->getLetter() << " Expected Letter: " << target->getExpectedLetter();
+
+            if(challengeSolved())
+                qDebug()<<"Challenge Solved!";
             break;
         }
-    }
+    }      
 }
 
+bool Calculations::challengeSolved(){
+    for(TargetLabel* target : GameState::getInstance().getImageTargets()){
+        if(!target->correctLetter())
+            return false;
+    }
+    return true;
+}

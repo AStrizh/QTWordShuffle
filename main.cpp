@@ -18,7 +18,7 @@
 
 
 QList<DraggableLabel *> createImageLabels(const QString &word, QWidget *parent);
-QList<TargetLabel *> createImageTargets(const int, QWidget *parent);
+QList<TargetLabel *> createImageTargets(const QString &word, QWidget *parent);
 
 int main(int argc, char *argv[])
 {
@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
     dragLabelParent->setGeometry(0, 0, window.width(), window.height());
 
     gameState.setImageLabels(createImageLabels(challenge.getShuffled(), dragLabelParent));
-    gameState.setImageTargets(createImageTargets(challenge.getWord().size(), dragLabelParent));
+    gameState.setImageTargets(createImageTargets(challenge.getWord(), dragLabelParent));
 
 
     //Gets the button object defined in the ui class and attches "clicked" functionality to it (calls getChallenge())
@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
         gameState.clearLists();
 
         gameState.setImageLabels(createImageLabels(challenge.getShuffled(), dragLabelParent));
-        gameState.setImageTargets(createImageTargets(challenge.getWord().size(), dragLabelParent));
+        gameState.setImageTargets(createImageTargets(challenge.getWord(), dragLabelParent));
         Calculations::updateLabelPositions(gameState.getImageLabels(),gameState.getImageTargets(), dragLabelParent);
 
     });
@@ -102,19 +102,22 @@ QList<DraggableLabel *> createImageLabels(const QString &word, QWidget *parent)
             DraggableLabel *label = new DraggableLabel(parent);
             // Load the image for the current letter and set it as a pixmap for the label
             QPixmap pixmap(QString(":/Letters/%1.png").arg(word.at(i)));
+            label->setLetter(word.at(i));
             label->setPixmap(pixmap.scaled(55,55,Qt::KeepAspectRatio,Qt::SmoothTransformation));
             imageLabels.append(label);
     }
     return imageLabels;
 }
 
-QList<TargetLabel *> createImageTargets(const int size, QWidget *parent)
+QList<TargetLabel *> createImageTargets(const QString &word, QWidget *parent)
 {
+    const int size = word.size();
     QList<TargetLabel *> imageTargets;
     for (int i = 0; i < size; ++i)
     {
             TargetLabel *label = new TargetLabel(parent);
             QPixmap pixmap(":/Letters/target.png");
+            label->setExpectedLetter(word.at(i));
             label->setPixmap(pixmap.scaled(60,60,Qt::KeepAspectRatio,Qt::SmoothTransformation));
             imageTargets.append(label);
     }

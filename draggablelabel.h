@@ -12,6 +12,8 @@ class DraggableLabel : public QLabel
 
 public:
     explicit DraggableLabel(QWidget *parent = nullptr);
+    QChar getLetter(){return letter;}
+    void setLetter(QChar letter){this->letter = letter;}
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
@@ -20,6 +22,7 @@ protected:
 
 private:
     QPoint m_startPosition;
+    QChar letter;
     bool m_dragging;
 };
 
