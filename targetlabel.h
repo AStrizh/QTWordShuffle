@@ -11,6 +11,7 @@ class TargetLabel : public QLabel
 public:
     explicit TargetLabel(QWidget *parent = nullptr);
     void generateCenter();
+    QPoint getCenter(){ return center;}
 
 private:
     QPoint center;

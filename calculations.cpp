@@ -1,5 +1,5 @@
-
 #include "calculations.h"
+
 
 Calculations::Calculations()
 {
@@ -44,3 +44,25 @@ void Calculations::updateLabelPositions(QList<DraggableLabel *> &imageLabels,
         imageTargets[i]->generateCenter();
     }
 }
+
+bool Calculations::distanceClose(QPoint letterPos, QPoint targetPos){
+    // Euclidean distance between two points
+    int distance = qSqrt(qPow(letterPos.x() - targetPos.x(), 2)
+                         + qPow(letterPos.y() - targetPos.y(), 2));
+    return (distance <= MIN_DISTANCE);
+}
+
+void Calculations::checkPositions(DraggableLabel* letter){
+
+    for(TargetLabel* target : GameState::getInstance().getImageTargets()){
+
+        if (Calculations::distanceClose(letter->pos(), target->pos())){
+            int newX =  target->getCenter().x() - letter->size().width()/2;
+            int newY =  target->getCenter().y() - letter->size().height()/2;
+
+            letter->move(newX,newY);
+            break;
+        }
+    }
+}
+

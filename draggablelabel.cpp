@@ -1,5 +1,7 @@
-
 #include "draggablelabel.h"
+#include "calculations.h"
+
+
 
 DraggableLabel::DraggableLabel(QWidget *parent)
     : QLabel(parent), m_dragging(false)
@@ -30,4 +32,8 @@ void DraggableLabel::mouseReleaseEvent(QMouseEvent *event)
     {
         m_dragging = false;
     }
+
+    Calculations::checkPositions(this);
+
 }
+

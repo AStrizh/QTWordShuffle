@@ -8,6 +8,8 @@
 
 #include "draggablelabel.h"
 #include "targetlabel.h"
+#include "gamestate.h"
+
 
 
 
@@ -21,9 +23,13 @@ public:
                               QList<TargetLabel *> &imageTargets,
                               QWidget *dragLabelParent);
 
+    static bool distanceClose(QPoint letterPos, QPoint targetPos);
+
+    static void checkPositions(DraggableLabel* letter);
+
 
 private:
-    //QList<TargetLabel *> &imageTargets;
+    static const int MIN_DISTANCE = 35;
 };
 
 #endif // CALCULATIONS_H
