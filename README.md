@@ -10,16 +10,15 @@ A word game for windows which shows the definition of a word and scrambled lette
 The objective is to figure out the word and rearrange the letters into the correct order by dragging them into the appropriate positions.
  
 Current Status:  
-Letters and their targets are properly displaying. But the system does not keep track of which letter is where and the letters do not lock
-into place. This functionality will be added soon.
+Letters and their targets are properly displaying. But the system does not keep track of which letter is where. The letters now lock
+into place. A GameState class has been created to help manage the state of the letter and target objects.
 
 As of last update:  
-A new class was created called TargetLabels which will mostly just be a QLabel but will have a "QPoint center" property which will store
-the center of the imagetarget for use later. 
+Implemented locking functionality. 
+If a letter is within a certain distance (to be determined) of a target it will center itself within the target.
 
 Next Steps:  
-Implement locking functionality. 
-If a letter is within a certain distance (to be determined) of a target it will center itself within the target.
+Track internally which letters are where so that correctness can be determined.
 
 ## Process
 
