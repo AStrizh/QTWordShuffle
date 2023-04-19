@@ -1,6 +1,8 @@
 #include "draggablelabel.h"
 #include "calculations.h"
 
+#include <QPropertyAnimation>
+
 DraggableLabel::DraggableLabel(QWidget *parent)
     : QLabel(parent), m_dragging(false)
 {
@@ -38,5 +40,17 @@ void DraggableLabel::mouseReleaseEvent(QMouseEvent *event)
     }
 
     Calculations::checkPositions(this);
+}
+
+void DraggableLabel::moveToStart(){
+
+    QPropertyAnimation *animation = new QPropertyAnimation(this, "geometry");
+    animation->setDuration(250);
+    animation->setStartValue(QRect(this->pos().x(), this->pos().y(), this->width(), this->height()));
+    animation->setEndValue(QRect(initialPosition.x(), initialPosition.y(), this->width(), this->height()));
+
+    animation->start();
+
+
 }
 

@@ -16,6 +16,7 @@ public:
     QPoint getCenter(){ return center;}
     bool correctLetter();
     void attachLetter(DraggableLabel* letter){this->attached = letter;}
+    DraggableLabel* getAttachedLetter(){return attached;}
     void clearLetter(){attached = NULL;}
     void setExpectedLetter(QChar letter){expectedLetter = letter;}
     QChar getExpectedLetter(){return expectedLetter;}

@@ -67,6 +67,7 @@ int main(int argc, char *argv[])
     QPushButton *button = window.findChild<QPushButton*>("pushButton");
     button->setParent(dragLabelParent);
     QObject::connect(button, &QPushButton::clicked, [&]() {
+
         challenge = gen.getChallenge();
         label->setText(challenge.getShuffled() + "\n" + challenge.getWord() + "\n" + challenge.getDefinition());
 

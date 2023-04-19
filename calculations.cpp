@@ -24,6 +24,7 @@ void Calculations::updateLabelPositions(QList<DraggableLabel *> &imageLabels,
         int y = 50;
         imageLabels[i]->move(x, y);
         imageLabels[i]->show();
+        imageLabels[i]->setPosition(QPoint(x,y));
     }
 
     imageTargets[0]->show();
@@ -61,12 +62,14 @@ void Calculations::checkPositions(DraggableLabel* letter){
             int newX =  target->getCenter().x() - letter->size().width()/2;
             int newY =  target->getCenter().y() - letter->size().height()/2;
 
+            if(target->getAttachedLetter() != NULL){
+                target->getAttachedLetter()->moveToStart();
+                target->getAttachedLetter()->clearTarget();
+            }
 
             letter->move(newX,newY);
             target->attachLetter(letter);
             letter->attachTarget(target);
-
-            //qDebug() << "Attached Letter: " << letter->getLetter() << " Expected Letter: " << target->getExpectedLetter();
 
             if(challengeSolved())
                 qDebug()<<"Challenge Solved!";

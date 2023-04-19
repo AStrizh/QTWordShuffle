@@ -18,8 +18,8 @@ public:
     void setLetter(QChar letter){this->letter = letter;}
     void attachTarget(TargetLabel* target){this->attached = target;}
     void clearTarget(){attached = NULL;}
-
-
+    void setPosition(QPoint position){initialPosition = position;}
+    void moveToStart();
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
@@ -32,6 +32,7 @@ private:
 
     QChar letter;
     TargetLabel* attached = NULL;
+    QPoint initialPosition;
 };
 
 #endif // DRAGGABLELABEL_H
