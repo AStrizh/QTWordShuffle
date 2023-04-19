@@ -15,11 +15,10 @@ public:
     void generateCenter();
     QPoint getCenter(){ return center;}
     bool correctLetter();
-    void attachLetter(DraggableLabel* letter){attached = letter;}
+    void attachLetter(DraggableLabel* letter){this->attached = letter;}
     void clearLetter(){attached = NULL;}
     void setExpectedLetter(QChar letter){expectedLetter = letter;}
     QChar getExpectedLetter(){return expectedLetter;}
-    //void checkLetter(QChar letter);
 
 private:
     QPoint center;

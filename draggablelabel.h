@@ -5,6 +5,8 @@
 #include <QLabel>
 #include <QMouseEvent>
 
+// Forward declaration
+class TargetLabel;
 
 class DraggableLabel : public QLabel
 {
@@ -14,6 +16,10 @@ public:
     explicit DraggableLabel(QWidget *parent = nullptr);
     QChar getLetter(){return letter;}
     void setLetter(QChar letter){this->letter = letter;}
+    void attachTarget(TargetLabel* target){this->attached = target;}
+    void clearTarget(){attached = NULL;}
+
+
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
@@ -22,8 +28,10 @@ protected:
 
 private:
     QPoint m_startPosition;
-    QChar letter;
     bool m_dragging;
+
+    QChar letter;
+    TargetLabel* attached = NULL;
 };
 
 #endif // DRAGGABLELABEL_H

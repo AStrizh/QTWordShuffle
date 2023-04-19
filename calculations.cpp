@@ -64,8 +64,8 @@ void Calculations::checkPositions(DraggableLabel* letter){
 
             letter->move(newX,newY);
             target->attachLetter(letter);
+            letter->attachTarget(target);
 
-            //TODO:Returns null instead of Letter for draggable label
             //qDebug() << "Attached Letter: " << letter->getLetter() << " Expected Letter: " << target->getExpectedLetter();
 
             if(challengeSolved())

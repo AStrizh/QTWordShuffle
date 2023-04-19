@@ -1,8 +1,6 @@
 #include "draggablelabel.h"
 #include "calculations.h"
 
-
-
 DraggableLabel::DraggableLabel(QWidget *parent)
     : QLabel(parent), m_dragging(false)
 {
@@ -31,6 +29,12 @@ void DraggableLabel::mouseReleaseEvent(QMouseEvent *event)
     if (event->button() == Qt::LeftButton)
     {
         m_dragging = false;
+    }
+
+    //If this letter was attached to a target then moved, clears out their relationship
+    if(attached != NULL){
+        attached->clearLetter();
+        attached = NULL;
     }
 
     Calculations::checkPositions(this);
