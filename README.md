@@ -10,18 +10,20 @@ A word game for windows which shows the definition of a word and scrambled lette
 The objective is to figure out the word and rearrange the letters into the correct order by dragging them into the appropriate positions.
  
 Current Status:  
-All major logic and functionality is completed. From here only UI/UX work left. When the word is solved, right now, there is
-only a message in the terminal. Will create some UI element that informs user when correct or incorrect. 
+All major logic and functionality is completed. From here only UI/UX work left.
 
 As of last update:  
-Letters lock in position and track their "correctness". If two letters are moved into the same spot the overlapped letter gets
-an animation moving it to its original location.
+Red arrow button labeled skip is visible when first presented with a word challenge. 
+If solved correctly, red arrow goes away and a green arrow appears. 
 
 Next Steps:  
-Add UI/UX elements informing the user they are correct. Allowing them to skip a letter or move on to the next puzzle. 
-Will likely add a red arrow for skipping and a gold arrow for advancing. The gold arrow will be hidden until correct,
-the red arrow will hide once correct.
+Add UI/UX elements informing the user they are correct.
 Will show user what the last word was.
+Add a Reset button that moves the letters to the original positions.
+Keep track of the number of solved vs skipped challenges.
+Add a welcome screen.
+Remove visible correct answer in the "Hint" section.
+
 
 ## Process
 
