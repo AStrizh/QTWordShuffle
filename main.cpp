@@ -1,10 +1,10 @@
 #include "mainwindow.h"
-#include <qpushbutton.h>
 
 #include <QApplication>
 #include <QFont>
 #include <QList>
 #include <QLabel>
+#include <QPushButton>
 #include <QHBoxLayout>
 
 #include "wordchallenge.h"
@@ -107,6 +107,11 @@ int main(int argc, char *argv[])
         gameState.setImageTargets(createImageTargets(challenge.getWord(), dragLabelParent));
         Calculations::updateLabelPositions(gameState.getImageLabels(),gameState.getImageTargets(), dragLabelParent);
 
+        greenArrow->setVisible(false);
+        nextLabel->setVisible(false);
+
+        redArrow->setVisible(true);
+        skipLabel->setVisible(true);
     });
 
     window.show();
@@ -118,18 +123,27 @@ int main(int argc, char *argv[])
     redArrow->setFixedSize(QSize(80, 70));
     greenArrow->setFixedSize(QSize(70, 70));
 
-    // Set the arrow images using background-image and center them
+    // Set the arrow images
     redArrow->setStyleSheet("image:url(:/Arrows/red-arrow.png); border: none;");
     greenArrow->setStyleSheet("image:url(:/Arrows/green-arrow.png); border: none;");
 
 
     int skipLabelPositionX = redArrow->x() + (redArrow->width() - skipLabel->sizeHint().width()) / 2;
-    int skipLabelPositionY = redArrow->y() - skipLabel->sizeHint().height(); // 5 pixels above the red arrow
+    int skipLabelPositionY = redArrow->y() - skipLabel->sizeHint().height();
     skipLabel->move(skipLabelPositionX, skipLabelPositionY);
 
     int nextLabelPositionX = greenArrow->x() + (greenArrow->width() - nextLabel->sizeHint().width()) / 2;
-    int nextLabelPositionY = greenArrow->y() - nextLabel->sizeHint().height(); // 5 pixels above the green arrow
+    int nextLabelPositionY = greenArrow->y() - nextLabel->sizeHint().height();
     nextLabel->move(nextLabelPositionX, nextLabelPositionY);
+
+    gameState.setRedButton(redArrow);
+    gameState.setgreenButton(greenArrow);
+    gameState.setNextLabel(nextLabel);
+    gameState.setSkipLabel(skipLabel);
+
+
+    greenArrow->setVisible(false);
+    nextLabel->setVisible(false);
 
     Calculations::updateLabelPositions(gameState.getImageLabels(), gameState.getImageTargets(), dragLabelParent);
 
