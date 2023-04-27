@@ -27,5 +27,7 @@
         <file>Letters/Z.png</file>
         <file>Letters/T.png</file>
         <file>Letters/W.png</file>
+        <file>Arrows/green-arrow.png</file>
+        <file>Arrows/red-arrow.png</file>
     </qresource>
 </RCC>

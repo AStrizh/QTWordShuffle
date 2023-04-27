@@ -63,10 +63,27 @@ int main(int argc, char *argv[])
     gameState.setImageTargets(createImageTargets(challenge.getWord(), dragLabelParent));
 
 
-    //Gets the button object defined in the ui class and attches "clicked" functionality to it (calls getChallenge())
-    QPushButton *button = window.findChild<QPushButton*>("pushButton");
-    button->setParent(dragLabelParent);
-    QObject::connect(button, &QPushButton::clicked, [&]() {
+    QLabel *skipLabel = new QLabel("SKIP", dragLabelParent);
+    QLabel *nextLabel = new QLabel("NEXT", dragLabelParent);
+
+    QFont labelFont;
+    labelFont.setWeight(QFont::Bold);
+    labelFont.setPixelSize(14);
+    skipLabel->setFont(labelFont);
+    nextLabel->setFont(labelFont);
+    skipLabel->setAlignment(Qt::AlignCenter);
+    nextLabel->setAlignment(Qt::AlignCenter);
+
+    QPushButton *redArrow = window.findChild<QPushButton*>("red_arrow");
+    redArrow->setParent(dragLabelParent);
+    //redArrow->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+
+
+    QPushButton *greenArrow = window.findChild<QPushButton*>("green_arrow");
+    greenArrow->setParent(dragLabelParent);
+
+
+    QObject::connect(redArrow, &QPushButton::clicked, [&]() {
 
         challenge = gen.getChallenge();
         label->setText(challenge.getShuffled() + "\n" + challenge.getWord() + "\n" + challenge.getDefinition());
@@ -79,12 +96,40 @@ int main(int argc, char *argv[])
 
     });
 
+    QObject::connect(greenArrow, &QPushButton::clicked, [&]() {
+
+        challenge = gen.getChallenge();
+        label->setText(challenge.getShuffled() + "\n" + challenge.getWord() + "\n" + challenge.getDefinition());
+
+        gameState.clearLists();
+
+        gameState.setImageLabels(createImageLabels(challenge.getShuffled(), dragLabelParent));
+        gameState.setImageTargets(createImageTargets(challenge.getWord(), dragLabelParent));
+        Calculations::updateLabelPositions(gameState.getImageLabels(),gameState.getImageTargets(), dragLabelParent);
+
+    });
 
     window.show();
 
-    int buttonPosition = (window.width() - button->size().width())/2;
-    button->move(buttonPosition, window.height() - 100);
+    redArrow->move(100, window.height() - 100);
+    greenArrow->move(window.width() - 150, window.height() - 100);
 
+    // Set the size of the arrow buttons
+    redArrow->setFixedSize(QSize(80, 70));
+    greenArrow->setFixedSize(QSize(70, 70));
+
+    // Set the arrow images using background-image and center them
+    redArrow->setStyleSheet("image:url(:/Arrows/red-arrow.png); border: none;");
+    greenArrow->setStyleSheet("image:url(:/Arrows/green-arrow.png); border: none;");
+
+
+    int skipLabelPositionX = redArrow->x() + (redArrow->width() - skipLabel->sizeHint().width()) / 2;
+    int skipLabelPositionY = redArrow->y() - skipLabel->sizeHint().height(); // 5 pixels above the red arrow
+    skipLabel->move(skipLabelPositionX, skipLabelPositionY);
+
+    int nextLabelPositionX = greenArrow->x() + (greenArrow->width() - nextLabel->sizeHint().width()) / 2;
+    int nextLabelPositionY = greenArrow->y() - nextLabel->sizeHint().height(); // 5 pixels above the green arrow
+    nextLabel->move(nextLabelPositionX, nextLabelPositionY);
 
     Calculations::updateLabelPositions(gameState.getImageLabels(), gameState.getImageTargets(), dragLabelParent);
 
