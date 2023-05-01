@@ -45,14 +45,13 @@ int main(int argc, char *argv[])
     label->setFont(font);
     label->setWordWrap(true);
 
-
     QVBoxLayout  *layout = new QVBoxLayout ();
     layout->addWidget(label, 0, Qt::AlignCenter);
-//    layout->addWidget(button, 0, Qt::AlignCenter);
     layout->setAlignment(Qt::AlignCenter);
 
     window.setCentralWidget(new QWidget(&window));
     window.centralWidget()->setLayout(layout);
+
 
 
 
@@ -61,6 +60,14 @@ int main(int argc, char *argv[])
 
     gameState.setImageLabels(createImageLabels(challenge.getShuffled(), dragLabelParent));
     gameState.setImageTargets(createImageTargets(challenge.getWord(), dragLabelParent));
+
+    QLabel* lastWord = window.findChild<QLabel*>("lastWord");
+    QFont lastFont;
+    //lastFont.setWeight(QFont::Bold);
+    lastFont.setPixelSize(16);
+    lastWord->setFont(lastFont);
+    lastWord->setParent(dragLabelParent);
+
 
 
     QLabel *skipLabel = new QLabel("SKIP", dragLabelParent);
@@ -74,6 +81,8 @@ int main(int argc, char *argv[])
     skipLabel->setAlignment(Qt::AlignCenter);
     nextLabel->setAlignment(Qt::AlignCenter);
 
+
+
     QPushButton *redArrow = window.findChild<QPushButton*>("red_arrow");
     redArrow->setParent(dragLabelParent);
     //redArrow->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -84,6 +93,8 @@ int main(int argc, char *argv[])
 
 
     QObject::connect(redArrow, &QPushButton::clicked, [&]() {
+
+        lastWord->setText(QString("The last word was: <b>%1</b>").arg(challenge.getWord()));
 
         challenge = gen.getChallenge();
         label->setText(challenge.getShuffled() + "\n" + challenge.getWord() + "\n" + challenge.getDefinition());
@@ -97,6 +108,8 @@ int main(int argc, char *argv[])
     });
 
     QObject::connect(greenArrow, &QPushButton::clicked, [&]() {
+
+        lastWord->setText(QString("The last word was: <b>%1</b>").arg(challenge.getWord()));
 
         challenge = gen.getChallenge();
         label->setText(challenge.getShuffled() + "\n" + challenge.getWord() + "\n" + challenge.getDefinition());
@@ -112,9 +125,13 @@ int main(int argc, char *argv[])
 
         redArrow->setVisible(true);
         skipLabel->setVisible(true);
+
+
     });
 
     window.show();
+
+    lastWord->move(lastWord->pos().x(),window.height() - 75);
 
     redArrow->move(100, window.height() - 100);
     greenArrow->move(window.width() - 150, window.height() - 100);

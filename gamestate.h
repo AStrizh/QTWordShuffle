@@ -28,6 +28,7 @@ public:
     void setSkipLabel(QLabel *label){skipLabel=label;}
     void setNextLabel(QLabel *label){nextLabel=label;}
 
+
     void redButtonVisible(bool visibility){redArrow->setVisible(visibility);}
     void greenButtonVisible(bool visibility){greenArrow->setVisible(visibility);}
     void skipLabelVisible(bool visibility){skipLabel->setVisible(visibility);}

@@ -77,7 +77,6 @@ void Calculations::checkPositions(DraggableLabel* letter){
                 GameState::getInstance().redButtonVisible(false);
                 GameState::getInstance().skipLabelVisible(false);
             }
-                //qDebug()<<"Challenge Solved!";
             break;
         }
     }      
