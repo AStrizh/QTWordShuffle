@@ -18,12 +18,11 @@ If all the letters are placed correctly the skip and reset buttons disappear and
 
 If two letters are placed into the same target, the previous letter goes back to its original spot.
 
-Features not completed in time:
-There is no welcome screen (splash screen). While I planned to make one early in the development I wanted to make sure all the functionality was working first. 
-Unfortunately, I ran out of time to add it.
-There is no score keeping system. Nothing keeps track of a user's performance. 
-It would be desirable to give the user some visual confirmation they are right besides the green arrow, 
-and to increase difficulty over time, for that "skinner box" effect.
+Features not completed in time:   
+-There is no welcome screen (splash screen). While I planned to make one early in the development I wanted to make sure all the functionality was working first.    
+-The reset button should rotate when pressed, but that turned out to be very convoluted. Will be added much later.   
+-There is no score keeping system. Nothing keeps track of a user's performance.  
+-It would be desirable to give the user some visual confirmation they are right besides the green arrow, and to increase difficulty over time, for that "skinner box" effect.
 
 One idea is to add a timer and see how many words can be solved in the time (like 5 minutes).  
 It would also be great to add a more colorful background.
@@ -31,13 +30,13 @@ It would also be great to add a more colorful background.
 Goal:  
 Make a functional word game for windows built with C++
 
-Current Status:  
-All major logic and functionality is completed.
-Lacks a Welcome screen. 
-Red arrow button labeled skip is visible when first presented with a word challenge.   
-If solved correctly, red arrow goes away and a green arrow appears.   
-Will show user what the last word was.    
-A Reset button moves the letters to the original positions.  
+Current Status:    
+-All major logic and functionality is completed.   
+-Lacks a Welcome screen.   
+-Red arrow button labeled skip is visible when first presented with a word challenge.    
+-If solved correctly, red arrow goes away and a green arrow appears.    
+-Will show user what the last word was.     
+-A Reset button moves the letters to the original positions.    
 
 
 As of last update:  
