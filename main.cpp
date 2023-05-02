@@ -26,7 +26,6 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     MainWindow window;
 
-
     window.setFixedSize(QSize(800, 600));
 
 
@@ -54,8 +53,6 @@ int main(int argc, char *argv[])
     window.centralWidget()->setLayout(layout);
 
 
-
-
     QWidget *dragLabelParent = new QWidget(&window);
     dragLabelParent->setGeometry(0, 0, window.width(), window.height());
 
@@ -68,7 +65,6 @@ int main(int argc, char *argv[])
     lastFont.setPixelSize(16);
     lastWord->setFont(lastFont);
     lastWord->setParent(dragLabelParent);
-
 
 
     QLabel *skipLabel = new QLabel("SKIP", dragLabelParent);
@@ -87,8 +83,6 @@ int main(int argc, char *argv[])
     resetLabel->setAlignment(Qt::AlignJustify);
 
 
-
-
     QPushButton *redArrow = window.findChild<QPushButton*>("red_arrow");
     redArrow->setParent(dragLabelParent);
 
@@ -104,7 +98,7 @@ int main(int argc, char *argv[])
         lastWord->setText(QString("The last word was: <b>%1</b>").arg(challenge.getWord()));
 
         challenge = gen.getChallenge();
-        label->setText(challenge.getShuffled() + "\n" + challenge.getWord() + "\n" + challenge.getDefinition());
+        label->setText(challenge.getDefinition());
 
         gameState.clearLists();
 
@@ -224,4 +218,3 @@ QList<TargetLabel *> createImageTargets(const QString &word, QWidget *parent)
     }
     return imageTargets;
 }
-
