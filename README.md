@@ -3,7 +3,7 @@ Created for COP 3003, Programming II FGCU 2023.
 
 A version of my Word Shuffle game for Windows Desktop made with Qt Creator with C++ and CMake.
 
-
+![alt text](https://github.com/AStrizh/QTWordShuffle/blob/master/demo.gif)
 
 Goal:  
 A word game for windows which shows the definition of a word and scrambled letters. 
@@ -13,16 +13,14 @@ Current Status:
 All major logic and functionality is completed. From here only UI/UX work left.
 
 As of last update:  
-Red arrow button labeled skip is visible when first presented with a word challenge. 
-If solved correctly, red arrow goes away and a green arrow appears. 
+Red arrow button labeled skip is visible when first presented with a word challenge.   
+If solved correctly, red arrow goes away and a green arrow appears.   
+Will show user what the last word was.    
+Add a Reset button that moves the letters to the original positions.  
 
 Next Steps:  
-Add UI/UX elements informing the user they are correct.
-Will show user what the last word was.
-Add a Reset button that moves the letters to the original positions.
-Keep track of the number of solved vs skipped challenges.
-Add a welcome screen.
-Remove visible correct answer in the "Hint" section.
+Add a welcome screen.  
+Keep track of the number of solved vs skipped challenges.  
 
 
 ## Process
