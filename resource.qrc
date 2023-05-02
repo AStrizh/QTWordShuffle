@@ -29,5 +29,6 @@
         <file>Letters/W.png</file>
         <file>Arrows/green-arrow.png</file>
         <file>Arrows/red-arrow.png</file>
+        <file>Arrows/reset.png</file>
     </qresource>
 </RCC>

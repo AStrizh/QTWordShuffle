@@ -49,8 +49,6 @@ void DraggableLabel::moveToStart(){
     animation->setStartValue(QRect(this->pos().x(), this->pos().y(), this->width(), this->height()));
     animation->setEndValue(QRect(initialPosition.x(), initialPosition.y(), this->width(), this->height()));
 
-    animation->start();
-
-
+    animation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 

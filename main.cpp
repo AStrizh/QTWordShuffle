@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 
 #include <QApplication>
+#include <QPropertyAnimation>
 #include <QFont>
 #include <QList>
 #include <QLabel>
@@ -36,7 +37,7 @@ int main(int argc, char *argv[])
 
 
     //Creates the label, button, alignment info, and attaches it to the window
-    QLabel *label = new QLabel(challenge.getShuffled() + "\n" + challenge.getWord() + "\n" + challenge.getDefinition());
+    QLabel *label = new QLabel(challenge.getDefinition());
     QFont font;
     font.setWeight(QFont::Bold);
     font.setPixelSize(14);
@@ -72,24 +73,30 @@ int main(int argc, char *argv[])
 
     QLabel *skipLabel = new QLabel("SKIP", dragLabelParent);
     QLabel *nextLabel = new QLabel("NEXT", dragLabelParent);
+    QLabel *resetLabel = new QLabel("RESET", dragLabelParent);
+
 
     QFont labelFont;
     labelFont.setWeight(QFont::Bold);
     labelFont.setPixelSize(14);
     skipLabel->setFont(labelFont);
     nextLabel->setFont(labelFont);
+    resetLabel->setFont(labelFont);
     skipLabel->setAlignment(Qt::AlignCenter);
     nextLabel->setAlignment(Qt::AlignCenter);
+    resetLabel->setAlignment(Qt::AlignJustify);
+
 
 
 
     QPushButton *redArrow = window.findChild<QPushButton*>("red_arrow");
     redArrow->setParent(dragLabelParent);
-    //redArrow->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-
 
     QPushButton *greenArrow = window.findChild<QPushButton*>("green_arrow");
     greenArrow->setParent(dragLabelParent);
+
+    QPushButton *resetArrow = window.findChild<QPushButton*>("reset");
+    resetArrow->setParent(dragLabelParent);
 
 
     QObject::connect(redArrow, &QPushButton::clicked, [&]() {
@@ -104,7 +111,6 @@ int main(int argc, char *argv[])
         gameState.setImageLabels(createImageLabels(challenge.getShuffled(), dragLabelParent));
         gameState.setImageTargets(createImageTargets(challenge.getWord(), dragLabelParent));
         Calculations::updateLabelPositions(gameState.getImageLabels(),gameState.getImageTargets(), dragLabelParent);
-
     });
 
     QObject::connect(greenArrow, &QPushButton::clicked, [&]() {
@@ -112,7 +118,7 @@ int main(int argc, char *argv[])
         lastWord->setText(QString("The last word was: <b>%1</b>").arg(challenge.getWord()));
 
         challenge = gen.getChallenge();
-        label->setText(challenge.getShuffled() + "\n" + challenge.getWord() + "\n" + challenge.getDefinition());
+        label->setText(challenge.getDefinition());
 
         gameState.clearLists();
 
@@ -126,8 +132,17 @@ int main(int argc, char *argv[])
         redArrow->setVisible(true);
         skipLabel->setVisible(true);
 
-
+        resetArrow->setVisible(true);
+        resetLabel->setVisible(true);
     });
+
+    QObject::connect(resetArrow, &QPushButton::clicked, [&]() {
+
+        for(DraggableLabel* label : gameState.getImageLabels()){
+            label->moveToStart();
+        }
+    });
+
 
     window.show();
 
@@ -135,14 +150,19 @@ int main(int argc, char *argv[])
 
     redArrow->move(100, window.height() - 100);
     greenArrow->move(window.width() - 150, window.height() - 100);
+    resetArrow->move(window.width() - 150, window.height() - 90);
+
 
     // Set the size of the arrow buttons
     redArrow->setFixedSize(QSize(80, 70));
     greenArrow->setFixedSize(QSize(70, 70));
+    resetArrow->setFixedSize(QSize(40, 40));
 
     // Set the arrow images
     redArrow->setStyleSheet("image:url(:/Arrows/red-arrow.png); border: none;");
     greenArrow->setStyleSheet("image:url(:/Arrows/green-arrow.png); border: none;");
+    resetArrow->setStyleSheet("image:url(:/Arrows/reset.png); border: none;");
+
 
 
     int skipLabelPositionX = redArrow->x() + (redArrow->width() - skipLabel->sizeHint().width()) / 2;
@@ -153,11 +173,15 @@ int main(int argc, char *argv[])
     int nextLabelPositionY = greenArrow->y() - nextLabel->sizeHint().height();
     nextLabel->move(nextLabelPositionX, nextLabelPositionY);
 
+    resetLabel->move(nextLabelPositionX - 15, nextLabelPositionY);
+
     gameState.setRedButton(redArrow);
-    gameState.setgreenButton(greenArrow);
+    gameState.setGreenButton(greenArrow);
+    gameState.setResetButton(resetArrow);
+
     gameState.setNextLabel(nextLabel);
     gameState.setSkipLabel(skipLabel);
-
+    gameState.setResetLabel(resetLabel);
 
     greenArrow->setVisible(false);
     nextLabel->setVisible(false);

@@ -76,6 +76,8 @@ void Calculations::checkPositions(DraggableLabel* letter){
                 GameState::getInstance().nextLabelVisible(true);
                 GameState::getInstance().redButtonVisible(false);
                 GameState::getInstance().skipLabelVisible(false);
+                GameState::getInstance().resetButtonVisible(false);
+                GameState::getInstance().resetLabelVisible(false);
             }
             break;
         }

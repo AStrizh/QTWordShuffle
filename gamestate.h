@@ -24,15 +24,22 @@ public:
     void setImageTargets(const QList<TargetLabel *> &targets) { imageTargets = targets; }
 
     void setRedButton(QPushButton *button){redArrow=button;}
-    void setgreenButton(QPushButton *button){greenArrow=button;}
+    void setGreenButton(QPushButton *button){greenArrow=button;}
+    void setResetButton(QPushButton *button){resetArrow=button;}
+
     void setSkipLabel(QLabel *label){skipLabel=label;}
     void setNextLabel(QLabel *label){nextLabel=label;}
+    void setResetLabel(QLabel *label){resetLabel=label;}
+
 
 
     void redButtonVisible(bool visibility){redArrow->setVisible(visibility);}
     void greenButtonVisible(bool visibility){greenArrow->setVisible(visibility);}
+    void resetButtonVisible(bool visibility){resetArrow->setVisible(visibility);}
+
     void skipLabelVisible(bool visibility){skipLabel->setVisible(visibility);}
     void nextLabelVisible(bool visibility){nextLabel->setVisible(visibility);}
+    void resetLabelVisible(bool visibility){resetLabel->setVisible(visibility);}
 
 
 private:
@@ -46,9 +53,12 @@ private:
 
     QPushButton *redArrow;
     QPushButton *greenArrow;
+    QPushButton *resetArrow;
 
     QLabel *skipLabel;
     QLabel *nextLabel;
+    QLabel *resetLabel;
+
 };
 
 #endif // GAMESTATE_H
