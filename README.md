@@ -37,4 +37,4 @@ work with many of the aspects that differentiate C++ from Java, specifically in 
 
 ## Contributors
 
-Aleksandr Strizhevskiy, astrizhevskiy@eagle.fgcu.edu
+Aleksandr Strizhevskiy, astrizhevskiy4134@eagle.fgcu.edu
